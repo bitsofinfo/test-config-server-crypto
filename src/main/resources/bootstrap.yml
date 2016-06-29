@@ -10,4 +10,4 @@ encrypt:
     secret: "123456"
 
 server.port: 8888
-spring.cloud.config.server.git.uri: file:///path/to/config-server-test1/configserver_gitrepo
+spring.cloud.config.server.git.uri: file:///tmp/x2/test-config-server-crypto/configserver_gitrepo
