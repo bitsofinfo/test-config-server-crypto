@@ -9,6 +9,7 @@ import org.springframework.cloud.config.server.EnableConfigServer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 
+import org.springframework.context.ApplicationContext;
 import org.springframework.beans.factory.annotation.Value;
 
 @SpringBootApplication(exclude = {
@@ -26,10 +27,12 @@ public class Application {
 	private static Environment env;
 
     public static void main(String[] args) throws Exception {
-       SpringApplication.run(new Class[]{Application.class}, args);
+       ApplicationContext context = SpringApplication.run(new Class[]{Application.class}, args);
    	
        System.out.println(env.getProperty("test.clear.prop"));
        System.out.println(env.getProperty("test.crypted.prop"));
+       
+       System.out.println(context.getEnvironment().getProperty("test.crypted.prop"));
    	
 
     }
