@@ -9,6 +9,8 @@ import org.springframework.cloud.config.server.EnableConfigServer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 
+import org.springframework.beans.factory.annotation.Value;
+
 @SpringBootApplication(exclude = {
 		  DataSourceAutoConfiguration.class, 
 		  HibernateJpaAutoConfiguration.class})
@@ -17,6 +19,9 @@ public class Application {
 	
 	@Autowired
 	private Environment environment;
+
+	@Value("${test.crypted.prop}")
+        private String myValue ;
 	
 	private static Environment env;
 
@@ -32,7 +37,7 @@ public class Application {
     @Bean
     public Object bean1() {
     	env = environment;
-
+        System.out.println(this.myValue);
     	return env;
     }
   
