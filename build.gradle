@@ -1,0 +1,65 @@
+description = 'config-server-test1'
+
+apply plugin: 'eclipse'
+apply plugin: 'java'
+apply plugin: 'spring-boot'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+apply from: rootProject.file('gradle/eclipse.gradle');
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.14'
+}
+
+
+buildscript {
+    ext {
+        springBootVersion = '1.3.5.RELEASE'
+    }
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+
+jar {
+    baseName = 'config-server-test1'
+    version = '0.0.1-SNAPSHOT'
+}
+
+
+dependencyManagement {
+	imports {
+		mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Brixton.SR1'
+	}
+}
+
+
+dependencies {
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+
+ 	compile 'org.springframework.boot:spring-boot-starter-actuator'
+	compile 'org.springframework.boot:spring-boot-starter-undertow'
+    compile 'org.springframework.cloud:spring-cloud-config-server'
+}
+
+// Ensure each project uses a different remote debug port
+def remoteDebugPort = '5002'
+
+if (!project.hasProperty('prod')) {
+    bootRun.jvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=" + remoteDebugPort]
+}
+
+
