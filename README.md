@@ -20,9 +20,9 @@ EDIT src/main/resources/bootstrap.yml and adjust the `spring.cloud.config.server
 
 Notice at the end of the boot, it prints out the values for the two properties in the environment `application.yml` (this print occurs in Application.java
 
-Notice that `test.crypted.prop` is **not decrypted**.... (not sure why its not as I need the decrypted value to configure another bean)
+Notice that `test.crypted.prop` at this point is **not decrypted**.... (not sure why? its not cleartext at this point as I need the decrypted value to configure another bean while the boot is in progress)
 
-Go to: http://localhost:8888/config-server-test1/test  (same result, **not decrypted**)
+After boot up, go to: http://localhost:8888/config-server-test1/test  (decrypted as expected)
 
 POST the below to http://localhost:8888/decrypt
 
